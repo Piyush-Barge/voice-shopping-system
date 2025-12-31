@@ -168,7 +168,7 @@ export default function ShoppingPage() {
   useEffect(() => {
     if (!transcript || transcript === lastCommand) return
 
-    console.log("[v0] Processing transcript:", transcript)
+    console.log("Processing transcript:", transcript)
     setLastCommand(transcript)
     processCommand(transcript.toLowerCase())
     resetTranscript()
@@ -185,7 +185,7 @@ export default function ShoppingPage() {
   }
 
   const processCommand = (command: string) => {
-    console.log("[v0] Command received:", command)
+    console.log("Command received:", command)
     const lowerCommand = command.toLowerCase()
 
     const normalized = lowerCommand
@@ -195,13 +195,13 @@ export default function ShoppingPage() {
       .replace(/\bcart\s*on\b/g, "carton") // Fix common mishearing
       .trim()
 
-    console.log("[v0] Normalized command:", normalized)
+    console.log("Normalized command:", normalized)
 
     if (waitingForProductName) {
       setWaitingForProductName(false)
       const product = findProduct(command)
       if (product) {
-        console.log("[v0] Found product:", product.id)
+        console.log("Found product:", product.id)
         setCurrentProduct(product)
         speakProductDetails(product)
       } else {
@@ -271,7 +271,7 @@ export default function ShoppingPage() {
     if (normalized.includes("find") || normalized.includes("where")) {
       const product = findProduct(command)
       if (product) {
-        console.log("[v0] Found product:", product.id)
+        console.log("Found product:", product.id)
         setCurrentProduct(product)
         speakProductDetails(product)
       } else {
@@ -309,7 +309,7 @@ export default function ShoppingPage() {
       (normalized.includes("show") || normalized.includes("view") || normalized.includes("my")) &&
       (normalized.includes("cart") || normalized.includes("items") || normalized.includes("basket"))
     ) {
-      console.log("[v0] Show cart command triggered")
+      console.log("Show cart command triggered")
       if (cart.length === 0) {
         speak("Your cart is empty.")
       } else {
@@ -337,7 +337,7 @@ export default function ShoppingPage() {
       normalized.includes("purchase") ||
       normalized.includes("buy")
     ) {
-      console.log("[v0] Checkout command triggered")
+      console.log("Checkout command triggered")
       if (cart.length === 0) {
         speak("Your cart is empty. Please add items first.")
       } else {
@@ -364,7 +364,7 @@ export default function ShoppingPage() {
       return
     }
 
-    console.log("[v0] No command matched")
+    console.log("No command matched")
     speak("Command not understood. Say help for available commands.")
   }
 

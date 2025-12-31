@@ -18,19 +18,19 @@ export function useTextToSpeech(onSpeakingChange?: (speaking: boolean) => void) 
       utterance.volume = 1
 
       utterance.onstart = () => {
-        console.log("[v0] TTS started")
+        console.log("TTS started")
         setIsSpeaking(true)
         onSpeakingChange?.(true)
       }
 
       utterance.onend = () => {
-        console.log("[v0] TTS ended")
+        console.log("TTS ended")
         setIsSpeaking(false)
         onSpeakingChange?.(false)
       }
 
       utterance.onerror = () => {
-        console.log("[v0] TTS error")
+        console.log("TTS error")
         setIsSpeaking(false)
         onSpeakingChange?.(false)
       }

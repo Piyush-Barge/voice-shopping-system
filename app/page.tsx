@@ -27,7 +27,7 @@ export default function Home() {
     if (hasGreeted && !hasStartedListening && !isSpeaking && !listening) {
       // Wait 2 seconds after speaking ends to ensure audio is clear
       const timer = setTimeout(() => {
-        console.log("[v0] Starting to listen for start command")
+        console.log("Starting to listen for start command")
         startListening()
         setHasStartedListening(true)
       }, 2000)
@@ -37,20 +37,20 @@ export default function Home() {
 
   useEffect(() => {
     if (transcript) {
-      console.log("[v0] Transcript received:", transcript)
+      console.log("Transcript received:", transcript)
       const lower = transcript
         .toLowerCase()
         .trim()
         .replace(/[.,!?;:]/g, "")
 
       if (lower.includes("start shopping") || lower.includes("start") || lower.includes("begin")) {
-        console.log("[v0] Navigating to shopping page")
+        console.log("Navigating to shopping page")
         speak("Starting shopping assistant")
         setTimeout(() => {
           router.push("/shopping")
         }, 1000)
       } else if (lower.length > 0) {
-        console.log("[v0] Command not recognized, waiting for 'start shopping'")
+        console.log("Command not recognized, waiting for 'start shopping'")
         // Don't restart listening immediately, wait a bit
         setTimeout(() => {
           if (!isSpeaking) {

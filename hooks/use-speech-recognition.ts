@@ -25,7 +25,7 @@ export function useSpeechRecognition() {
     recognition.lang = "en-US"
 
     recognition.onstart = () => {
-      console.log("[v0] Speech recognition started")
+      console.log("Speech recognition started")
       setListening(true)
     }
 
@@ -38,7 +38,7 @@ export function useSpeechRecognition() {
         }
       }
       if (finalTranscript) {
-        console.log("[v0] Final transcript:", finalTranscript)
+        console.log("Final transcript:", finalTranscript)
         setTranscript(finalTranscript.trim())
       }
     }
@@ -47,19 +47,19 @@ export function useSpeechRecognition() {
       // "no-speech" is a normal occurrence when no speech is detected
       // It's not an actual error, so we handle it silently
       if (event.error === "no-speech") {
-        console.log("[v0] No speech detected, will retry")
+        console.log("No speech detected, will retry")
       } else if (event.error === "aborted") {
         // Aborted is also normal when we manually stop
-        console.log("[v0] Recognition aborted")
+        console.log("Recognition aborted")
       } else {
         // Only log actual errors like permission denied, network issues, etc.
-        console.error("[v0] Speech recognition error:", event.error)
+        console.error("Speech recognition error:", event.error)
       }
       setListening(false)
     }
 
     recognition.onend = () => {
-      console.log("[v0] Speech recognition ended")
+      console.log("Speech recognition ended")
       setListening(false)
 
       if (shouldListen && !pausedForSpeaking) {
@@ -74,7 +74,7 @@ export function useSpeechRecognition() {
             }
           } catch (e) {
             // Silently handle restart errors (usually "already started")
-            console.log("[v0] Recognition restart skipped")
+            console.log("Recognition restart skipped")
           }
         }, 1000)
       }
@@ -98,17 +98,17 @@ export function useSpeechRecognition() {
   useEffect(() => {
     if (!recognitionRef.current) return
 
-    if (shouldListen && !listening && !pausedForSpeaking) {
+        if (shouldListen && !listening && !pausedForSpeaking) {
       try {
-        console.log("[v0] Starting recognition")
+        console.log("Starting recognition")
         recognitionRef.current.start()
       } catch (e) {
         // Silently handle "already started" errors
-        console.log("[v0] Recognition already active")
+        console.log("Recognition already active")
       }
     } else if (!shouldListen && listening) {
       try {
-        console.log("[v0] Stopping recognition")
+        console.log("Stopping recognition")
         if (restartTimeoutRef.current) {
           clearTimeout(restartTimeoutRef.current)
         }
@@ -131,7 +131,7 @@ export function useSpeechRecognition() {
   }, [])
 
   const pauseForSpeaking = useCallback(() => {
-    console.log("[v0] Pausing recognition for speaking")
+    console.log("Pausing recognition for speaking")
     setPausedForSpeaking(true)
     if (listening && recognitionRef.current) {
       try {
@@ -143,7 +143,7 @@ export function useSpeechRecognition() {
   }, [listening])
 
   const resumeAfterSpeaking = useCallback(() => {
-    console.log("[v0] Resuming recognition after speaking")
+    console.log("Resuming recognition after speaking")
     setPausedForSpeaking(false)
 
     // Add delay to ensure audio has finished playing
@@ -153,11 +153,11 @@ export function useSpeechRecognition() {
     restartTimeoutRef.current = setTimeout(() => {
       if (shouldListen && !listening && recognitionRef.current) {
         try {
-          console.log("[v0] Restarting recognition after TTS")
+          console.log("Restarting recognition after TTS")
           recognitionRef.current.start()
         } catch (e) {
           // Silently handle restart errors
-          console.log("[v0] Recognition restart skipped")
+          console.log("Recognition restart skipped")
         }
       }
     }, 1000)
